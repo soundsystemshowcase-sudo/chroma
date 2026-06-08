@@ -1,0 +1,593 @@
+We’ll create a complete, production‑ready event page for **W01: Back to School — Jamaican High School Colors**. It uses the exact CHROMA design system (gold, black, serif display), includes logos for the five schools (assuming they exist in `/assets/images/schoolaz/`), a countdown to the event, venue details, dress code, ticket CTA, and the signature contests & VIP sections.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CHROMA · W01 | Back to School — Jamaican High School Colors</title>
+  <meta name="description" content="CHROMA W01: Back to School night. Wear your Jamaican high school colors — Calabar, Wolmer's, KC, Campion, Ardenne. Every Wednesday 9PM in Chicago.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ----- GLOBAL RESET + CHROMA CORE SYSTEM (from index) ----- */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dim: #8A6E2F;
+      --black: #080808;
+      --black-soft: #111111;
+      --black-card: #161616;
+      --white: #F5F0E8;
+      --white-dim: rgba(245,240,232,0.55);
+      --white-faint: rgba(245,240,232,0.12);
+      --border-gold: rgba(201,168,76,0.3);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAVIGATION (identical) */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 68px;
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border-gold);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* EVENT HERO */
+    .event-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: var(--black);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(201,168,76,0.2) 0%, transparent 70%),
+                  radial-gradient(circle at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 60%);
+      animation: softPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes softPulse {
+      0% { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.02); }
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1000px;
+      width: 100%;
+    }
+    .event-badge {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(0,0,0,0.5);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      margin-bottom: 1.2rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 12vw, 6rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin: 1rem 0;
+    }
+    .schools-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .school-logo {
+      background: rgba(22,22,22,0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 0.75rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      border: 0.5px solid var(--border-gold);
+      transition: transform 0.2s, border-color 0.2s;
+      min-width: 100px;
+    }
+    .school-logo:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+    }
+    .school-logo img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px rgba(201,168,76,0.3));
+    }
+    .school-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+    }
+    .event-datetime {
+      margin: 1.5rem 0;
+      font-size: 1rem;
+      background: rgba(0,0,0,0.5);
+      display: inline-flex;
+      gap: 1rem;
+      padding: 0.5rem 1.5rem;
+      border-radius: 40px;
+      border: 0.5px solid var(--border-gold);
+      backdrop-filter: blur(4px);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .event-datetime span {
+      color: var(--gold);
+    }
+    .countdown {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .cd-block {
+      background: rgba(22,22,22,0.8);
+      border-radius: 12px;
+      padding: 0.8rem 1.2rem;
+      min-width: 70px;
+      border: 0.5px solid var(--border-gold);
+    }
+    .cd-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--gold);
+    }
+    .cd-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .btn-primary {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      border: none;
+      padding: 0.85rem 2.4rem;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-ghost {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 0.5px solid var(--gold);
+      padding: 0.85rem 2.4rem;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(201,168,76,0.1); }
+
+    /* SECTION STYLES */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--white-dim);
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+    .gold-rule {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1rem 0 1.5rem;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .info-card {
+      background: var(--black-card);
+      border: 0.5px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 1.8rem;
+      transition: transform 0.2s;
+    }
+    .info-card:hover { transform: translateY(-4px); border-color: var(--gold-dim); }
+    .info-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .info-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .info-card p, .info-card ul { font-size: 0.85rem; color: var(--white-dim); line-height: 1.6; }
+    .info-card ul { list-style: none; padding-left: 0; margin-top: 0.5rem; }
+    .info-card li { margin-bottom: 0.3rem; }
+
+    /* school showdown */
+    .showdown {
+      background: var(--black-soft);
+      border-top: 0.5px solid var(--border-gold);
+      border-bottom: 0.5px solid var(--border-gold);
+    }
+    .schools-showcase {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .showcase-item {
+      text-align: center;
+      width: 140px;
+    }
+    .showcase-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      background: rgba(0,0,0,0.4);
+      padding: 0.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-gold);
+    }
+    .contest-card {
+      background: var(--black-card);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    footer {
+      background: var(--black);
+      border-top: 0.5px solid var(--border-gold);
+      padding: 3rem 2rem 2rem;
+      margin-top: 2rem;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+    .footer-bottom {
+      border-top: 0.5px solid var(--white-faint);
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(245,240,232,0.3);
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .schools-strip { gap: 1rem; }
+      .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .countdown { gap: 0.5rem; }
+      .cd-block { padding: 0.4rem 0.8rem; min-width: 55px; }
+      .cd-number { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="/assets/images/logos/chromalogo_sm.png" alt="CHROMA" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <span style="display:none;">CHROMA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">52Weeks</a></li>
+    <li><a href="#">Themes</a></li>
+    <li><a href="#">VIP</a></li>
+    <li><a href="#">Venues</a></li>
+    <li><a href="#">Press</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Get Tickets</a>
+</nav>
+
+<!-- EVENT HERO -->
+<section class="event-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="event-badge">WEEK 01 · BACK TO SCHOOL</div>
+    <h1 class="hero-title">Jamaican High School<br><span>Colors Night</span></h1>
+    <p class="hero-sub">Wear your alma mater · Represent your legacy</p>
+
+    <div class="schools-strip">
+      <div class="school-logo"><img src="/assets/images/schoolaz/Calabar.png" alt="Calabar" onerror="this.src='https://placehold.co/64x64?text=Calabar'"><span class="school-name">CALABAR</span></div>
+      <div class="school-logo"><img src="/assets/images/schoolaz/Wolmers.png" alt="Wolmer's" onerror="this.src='https://placehold.co/64x64?text=Wolmers'"><span class="school-name">WOLMER'S</span></div>
+      <div class="school-logo"><img src="/assets/images/schoolaz/KC.png" alt="Kingston College" onerror="this.src='https://placehold.co/64x64?text=KC'"><span class="school-name">KINGSTON COLLEGE</span></div>
+      <div class="school-logo"><img src="/assets/images/schoolaz/Campion.png" alt="Campion College" onerror="this.src='https://placehold.co/64x64?text=Campion'"><span class="school-name">CAMPION</span></div>
+      <div class="school-logo"><img src="/assets/images/schoolaz/Ardenne.png" alt="Ardenne High" onerror="this.src='https://placehold.co/64x64?text=Ardenne'"><span class="school-name">ARDENNE</span></div>
+    </div>
+
+    <div class="event-datetime">
+      <span>📅 WEDNESDAY, JUNE 11, 2025</span>
+      <span>⏰ DOORS 9:00PM – 1:45AM</span>
+      <span>📍 CHICAGO, IL</span>
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown" id="countdown">
+      <div class="cd-block"><div class="cd-number" id="days">00</div><div class="cd-label">DAYS</div></div>
+      <div class="cd-block"><div class="cd-number" id="hours">00</div><div class="cd-label">HOURS</div></div>
+      <div class="cd-block"><div class="cd-number" id="minutes">00</div><div class="cd-label">MIN</div></div>
+      <div class="cd-block"><div class="cd-number" id="seconds">00</div><div class="cd-label">SEC</div></div>
+    </div>
+
+    <div class="btn-group">
+      <a class="btn-primary" href="#">SECURE YOUR SPOT</a>
+      <a class="btn-ghost" href="#">VIP UPGRADE</a>
+    </div>
+  </div>
+</section>
+
+<!-- INFO + VENUE + DRESS CODE -->
+<div class="section-container">
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">🏫</div>
+      <h3>School Spirit</h3>
+      <p>Wear your high school colors with pride. Whether you're Calabar green & gold, Wolmer's blue & white, KC purple & gold, Campion maroon & gold, or Ardenne red & gold — represent your alma mater.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🎵</div>
+      <h3>Soundtrack</h3>
+      <p>Old school dancehall, revival tunes, and school anthems. DJ sets dedicated to each school — plus a "School Chant Battle" on the floor.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🏆</div>
+      <h3>Contests</h3>
+      <p>Best Dressed (solo) · Best Couple · Best School Group (5+). Prizes include free entry for next month + CHROMA merch.</p>
+    </div>
+  </div>
+
+  <div class="gold-rule"></div>
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <p class="section-label">Dress Code Enforced</p>
+      <h2 class="section-title">Wear Your School Colors</h2>
+      <p class="section-sub">No ticket? No entry without the theme. Come correct — full outfit from head to toe representing your Jamaican high school.</p>
+    </div>
+    <a class="btn-ghost" href="#" style="padding:0.6rem 1.4rem;">View Full Dress Code</a>
+  </div>
+</div>
+
+<!-- SCHOOL SHOWDOWN SECTION (Logos bigger) -->
+<section class="showdown">
+  <div class="section-container">
+    <p class="section-label">The Battle of the Titans</p>
+    <h2 class="section-title">School Pride Showdown</h2>
+    <p class="section-sub">Five legendary institutions, one dancefloor. Which school brings the most energy? Flag waving, chants, and ultimate bragging rights.</p>
+    <div class="schools-showcase">
+      <div class="showcase-item"><img src="/assets/images/schoolaz/Calabar.png" alt="Calabar"><p class="school-name">CALABAR<br><span style="font-size:0.6rem;">Green & Gold</span></p></div>
+      <div class="showcase-item"><img src="/assets/images/schoolaz/Wolmers.png" alt="Wolmer's"><p class="school-name">WOLMER'S<br><span style="font-size:0.6rem;">Blue & White</span></p></div>
+      <div class="showcase-item"><img src="/assets/images/schoolaz/KC.png" alt="KC"><p class="school-name">KINGSTON COLLEGE<br><span style="font-size:0.6rem;">Purple & Gold</span></p></div>
+      <div class="showcase-item"><img src="/assets/images/schoolaz/Campion.png" alt="Campion"><p class="school-name">CAMPION<br><span style="font-size:0.6rem;">Maroon & Gold</span></p></div>
+      <div class="showcase-item"><img src="/assets/images/schoolaz/Ardenne.png" alt="Ardenne"><p class="school-name">ARDENNE<br><span style="font-size:0.6rem;">Red & Gold</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKET & VIP -->
+<div class="section-container" id="vip">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div>
+      <p class="section-label">Tickets</p>
+      <h2 class="section-title">General Admission</h2>
+      <p class="section-sub">$20 presale · $30 at door (if available). Includes entry, one welcome drink, and access to all competitions.</p>
+      <a class="btn-primary" href="#" style="margin-top: 1rem;">Buy Tickets →</a>
+    </div>
+    <div style="background: var(--black-card); border: 0.5px solid var(--border-gold); border-radius: 8px; padding: 2rem;">
+      <p class="section-label">Premium Access</p>
+      <h3 style="font-family: var(--font-display); font-size: 2rem; color: var(--gold);">VIP Experience</h3>
+      <p style="margin: 1rem 0; color: var(--white-dim);">$150 · Reserved seating, bottle service, priority entry, dedicated photographer, DJ meet & greet.</p>
+      <a class="btn-ghost" href="#">Reserve VIP Table</a>
+    </div>
+  </div>
+</div>
+
+<!-- VENUE INFO BAR -->
+<div style="background: var(--black-soft); border-top: 0.5px solid var(--border-gold); border-bottom: 0.5px solid var(--border-gold); padding: 1.2rem 2rem; text-align: center;">
+  <p style="font-size: 0.8rem; letter-spacing: 0.1em;"><span style="color: var(--gold);">📍 VENUE:</span> TBA (Chicago Loop) · Exact address sent to ticket holders 24h before event. <strong style="color: var(--white);">Doors 9PM sharp.</strong></p>
+</div>
+
+<!-- CONTESTS & ACTIVITIES -->
+<section style="padding: 2rem 2rem 3rem;">
+  <div class="section-container" style="padding: 0;">
+    <p class="section-label">Win the Night</p>
+    <h2 class="section-title">Contests & Prizes</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; margin-top: 1.5rem;">
+      <div class="contest-card">👑 <strong>Best Dressed (Male/Female)</strong><br> $100 + CHROMA bottle</div>
+      <div class="contest-card">💑 <strong>Best Couple</strong><br> 2 VIP tickets next event</div>
+      <div class="contest-card">🎓 <strong>Best School Group (5+)</strong><br> $200 cash + featured on IG</div>
+      <div class="contest-card">📸 <strong>Best Flag / School Banner</strong><br> Merch bundle</div>
+      <div class="contest-card">🕺 <strong>Dance-off (School Anthem)</strong><br> Champagne toast</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL STRIP -->
+<div style="background: var(--black-soft); text-align: center; padding: 2.5rem;">
+  <p class="section-label">Join the Movement</p>
+  <h2 class="section-title" style="font-size: 1.8rem;">#CHROMABackToSchool</h2>
+  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0;">
+    <span class="hashtag" style="border:0.5px solid var(--border-gold); padding:0.3rem 1rem; border-radius:30px;">#WearYourSchool</span>
+    <span class="hashtag" style="border:0.5px solid var(--border-gold); padding:0.3rem 1rem; border-radius:30px;">#CalabarVsWolmers</span>
+    <span class="hashtag" style="border:0.5px solid var(--border-gold); padding:0.3rem 1rem; border-radius:30px;">#CHROMAChi</span>
+  </div>
+  <p style="font-size:0.75rem; color: var(--white-dim);">Tag us in your school fit — best photo wins free entry to next month's event.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand-name">CHROMA</p>
+      <p class="footer-brand-sub">Wear Your Colors</p>
+      <p class="footer-brand-desc">A monthly color-themed event series in Chicago. Caribbean culture, fashion, music — one color at a time.</p>
+    </div>
+    <div><p class="footer-col-title">Events</p><ul class="footer-links"><li><a href="#">52 Weeks</a></li><li><a href="#">Color Reveal</a></li><li><a href="#">Past Events</a></li></ul></div>
+    <div><p class="footer-col-title">Participate</p><ul class="footer-links"><li><a href="#">Get Tickets</a></li><li><a href="#">VIP Access</a></li><li><a href="#">Contests</a></li></ul></div>
+    <div><p class="footer-col-title">Company</p><ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Press Kit</a></li><li><a href="#">Legal</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 CHROMA Chicago — Back to School Edition. All rights reserved.</p></div>
+</footer>
+
+<!-- COUNTDOWN SCRIPT (event: Wed June 11, 2025 21:00) -->
+<script>
+  const eventDate = new Date(2025, 5, 11, 21, 0, 0); // June 11, 2025 9:00 PM
+  function updateCountdown() {
+    const now = new Date();
+    const diff = eventDate - now;
+    if (diff <= 0) {
+      document.getElementById('days').innerText = '00';
+      document.getElementById('hours').innerText = '00';
+      document.getElementById('minutes').innerText = '00';
+      document.getElementById('seconds').innerText = '00';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (86400000)) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    document.getElementById('days').innerText = String(days).padStart(2,'0');
+    document.getElementById('hours').innerText = String(hours).padStart(2,'0');
+    document.getElementById('minutes').innerText = String(mins).padStart(2,'0');
+    document.getElementById('seconds').innerText = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
+```
