@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CHROMA — 52 Colors · 52 Nights | A Year In Color</title>
+  <meta name="description" content="52 weeks, 52 vibrant themes — From Caribbean independence to neon glow, vintage throwbacks, and carnival energy. Every Wednesday 9PM–1:45AM in Chicago.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dim: #8A6E2F;
+      --black: #080808;
+      --black-soft: #111111;
+      --black-card: #161616;
+      --white: #F5F0E8;
+      --white-dim: rgba(245,240,232,0.55);
+      --white-faint: rgba(245,240,232,0.12);
+      --border-gold: rgba(201,168,76,0.3);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 68px;
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border-gold);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    .hero-52 {
+      position: relative;
+      min-height: 85vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      overflow: hidden;
+    }
+    .hero-gradient-52 {
+      position: absolute; inset: 0; z-index: 0;
+      background: var(--black);
+    }
+    .hero-gradient-52::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(201,168,76,0.2) 0%, transparent 70%),
+                  radial-gradient(circle at 20% 70%, rgba(201,168,76,0.08) 0%, transparent 55%);
+      animation: softPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes softPulse {
+      0% { opacity: 0.6; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.03); }
+    }
+    .hero-52-content {
+      position: relative; z-index: 2; max-width: 960px;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .hero-52-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.8rem, 12vw, 7rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: 0.06em;
+      color: var(--white);
+    }
+    .hero-52-title span { color: var(--gold); display: inline-block; }
+    .hero-sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin: 1.2rem 0 0.5rem;
+    }
+    .weekly-schedule {
+      font-size: 0.8rem;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      border: 0.5px solid var(--border-gold);
+      margin-top: 0.8rem;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+    }
+    .weekly-highlight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(22,22,22,0.7);
+      backdrop-filter: blur(8px);
+      border: 0.5px solid var(--border-gold);
+      border-radius: 40px;
+      padding: 0.7rem 1.8rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .highlight-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+    }
+    .highlight-theme {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+    .highlight-date {
+      font-size: 0.7rem;
+      color: var(--white-dim);
+    }
+    .gold-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.8rem auto 0;
+    }
+
+    .section-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .section-subhead {
+      font-size: 0.9rem;
+      color: var(--white-dim);
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+
+    .weeks-master {
+      margin: 1rem 0 2rem;
+    }
+    .quarter-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-left: 2px solid var(--gold);
+      padding-left: 1rem;
+      margin: 2.5rem 0 1rem 0;
+    }
+    .wk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 12px;
+    }
+    .wk {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      background: var(--black-card);
+      border: 0.5px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      transition: all 0.25s ease;
+      cursor: default;
+      position: relative;
+    }
+    .wk:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      background: #1c1c1c;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.2);
+    }
+    .wk-num {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold-dim);
+      background: rgba(201,168,76,0.1);
+      width: 42px;
+      text-align: center;
+      padding: 0.2rem 0;
+      border-radius: 24px;
+      font-family: var(--font-body);
+    }
+    .wk-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .wk-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .wk-sub {
+      font-size: 0.7rem;
+      color: var(--white-dim);
+      margin-top: 4px;
+      letter-spacing: 0.01em;
+    }
+    .wk-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: 0 0 3px rgba(255,255,240,0.3);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .wk:hover .wk-dot {
+      transform: scale(1.2);
+    }
+    .wk.current-week {
+      border: 1px solid var(--gold);
+      background: linear-gradient(115deg, #1f1b0e 0%, #161616 100%);
+      box-shadow: 0 0 12px rgba(201,168,76,0.5);
+      position: relative;
+    }
+    .wk.current-week::before {
+      content: "⚡ CURRENT WEEK";
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-family: var(--font-body);
+    }
+
+    .color-strip {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 1rem;
+    }
+    .stat-badge {
+      background: rgba(22,22,22,0.7);
+      border: 0.5px solid var(--border-gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+    }
+    .stat-badge strong {
+      color: white;
+      font-weight: 600;
+    }
+
+    footer {
+      background: var(--black);
+      border-top: 0.5px solid var(--border-gold);
+      padding: 3rem 2.5rem 2rem;
+      margin-top: 3rem;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .footer-brand-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 1rem;
+    }
+    .footer-brand-desc {
+      font-size: 0.8rem;
+      color: var(--white-dim);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      border-top: 0.5px solid var(--white-faint);
+      padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.7rem; color: rgba(245,240,232,0.3); letter-spacing: 0.08em; }
+    .footer-socials { display: flex; gap: 1.2rem; }
+    .footer-socials a {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-decoration: none;
+    }
+    .footer-socials a:hover { color: var(--gold-light); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .wk-grid { grid-template-columns: 1fr; }
+      .hero-52 { padding-top: 6rem; }
+      .weekly-highlight-badge { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+    @media (max-width: 480px) {
+      .footer-inner { grid-template-columns: 1fr; }
+      .section-container { padding: 1.5rem; }
+    }
+    .btn-scroll {
+      background: none;
+      border: 0.5px solid var(--border-gold);
+      color: var(--gold);
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .btn-scroll:hover { background: rgba(201,168,76,0.1); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="assets/images/logos/chromalogo_sm.png" alt="CHROMA" style="height:44px; width:auto; margin-right: 4px;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#calendar-52">52 Weeks</a></li>
+    <li><a href="#vibe">Themes</a></li>
+    <li><a href="#vip">VIP</a></li>
+    <li><a href="#">Venues</a></li>
+    <li><a href="#">Press</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Get Tickets</a>
+</nav>
+
+<section class="hero-52" id="home">
+  <div class="hero-gradient-52"></div>
+  <div class="hero-52-content">
+    <p class="hero-eyebrow">CHICAGO · THE ULTIMATE COLOR JOURNEY</p>
+    <h1 class="hero-52-title">52 COLORS ·<br><span>52 NIGHTS</span></h1>
+    <p class="hero-sub">Every Wednesday · Doors 9PM – 1:45AM</p>
+    <div class="weekly-schedule">📍 Chicago · Live DJ · Dress code: Wear the theme</div>
+    <div class="gold-divider"></div>
+    <div class="weekly-highlight-badge" id="currentWeekHighlight">
+      <span class="highlight-label">🔮 THIS WEEK'S THEME</span>
+      <span class="highlight-theme" id="currentWeekName">Juneteenth Celebration</span>
+      <span class="highlight-date" id="currentWeekDate">June 7 – 13, 2025 · Wednesday June 11</span>
+    </div>
+    <div>
+      <button class="btn-scroll" id="scrollToCurrentBtn">⟳ Jump to current week</button>
+    </div>
+  </div>
+</section>
+
+<div class="section-container" id="calendar-52">
+  <div class="section-label">The Full Spectrum</div>
+  <h2 class="section-title">One Year. One Vibe. Infinite Color.</h2>
+  <p class="section-subhead">From school pride to carnival euphoria — every Wednesday we transform Chicago into a living color palette. 52 weeks, 52 distinct experiences.</p>
+  
+  <div class="color-strip">
+    <div class="stat-badge"><strong>52</strong> THEMES</div>
+    <div class="stat-badge"><strong>20+</strong> CARIBBEAN NATIONS</div>
+    <div class="stat-badge"><strong>7</strong> CONTEST CATEGORIES</div>
+    <div class="stat-badge"><strong>WEDNESDAYS</strong> 9PM–1:45AM</div>
+  </div>
+
+  <div class="weeks-master">
+    <!-- Q1 -->
+    <div class="quarter-title">◈ Q1 · JAN — MAR · ROOTS & IDENTITY ◈</div>
+    <div class="wk-grid" data-quarter="1">
+      <div class="wk"><span class="wk-num">W01</span><div class="wk-info"><div class="wk-name">Back to School — Jamaican High School Colors</div><div class="wk-sub">Calabar · Wolmer's · KC · Campion · Ardenne</div></div><div class="wk-dot" style="background:#4169B4;"></div></div>
+      <div class="wk"><span class="wk-num">W02</span><div class="wk-info"><div class="wk-name">Garrison Classics — Inner-City School Rivalries</div><div class="wk-sub">Excelsior · Penwood · Dunoon · Tarrant</div></div><div class="wk-dot" style="background:#8B1A1A;"></div></div>
+      <div class="wk"><span class="wk-num">W03</span><div class="wk-info"><div class="wk-name">Country vs. Town — Rural Jamaica Night</div><div class="wk-sub">Manning's · Munro · Holmwood · Green Pond</div></div><div class="wk-dot" style="background:#3B6D11;"></div></div>
+      <div class="wk"><span class="wk-num">W04</span><div class="wk-info"><div class="wk-name">Love in Color — Valentine's Edition</div><div class="wk-sub">Red · Pink · White · Couples discount</div></div><div class="wk-dot" style="background:#D4537E;"></div></div>
+      <div class="wk"><span class="wk-num">W05</span><div class="wk-info"><div class="wk-name">Roots Rock Reggae — Earth Tones Night</div><div class="wk-sub">Brown · Gold · Green · Natural vibes</div></div><div class="wk-dot" style="background:#BA7517;"></div></div>
+      <div class="wk"><span class="wk-num">W06</span><div class="wk-info"><div class="wk-name">Black Love — Melanin & Elegance</div><div class="wk-sub">Black · Gold · Deep jewel tones</div></div><div class="wk-dot" style="background:#C9A84C;"></div></div>
+      <div class="wk"><span class="wk-num">W07</span><div class="wk-info"><div class="wk-name">Rasta Colors — Red Gold & Green</div><div class="wk-sub">Rastafari culture · Iration · Conscious vibes</div></div><div class="wk-dot" style="background:#C8102E;"></div></div>
+      <div class="wk"><span class="wk-num">W08</span><div class="wk-info"><div class="wk-name">Caribbean Flags — 10-Nation Showdown</div><div class="wk-sub">JA · TT · BB · HT · GY · BS · AG · LC · GD · DM</div></div><div class="wk-dot" style="background:#009B77;"></div></div>
+      <div class="wk"><span class="wk-num">W09</span><div class="wk-info"><div class="wk-name">Small Island Energy — Eastern Caribbean Night</div><div class="wk-sub">Soca heavy · Bajan · Vincy · Trini</div></div><div class="wk-dot" style="background:#0077B6;"></div></div>
+      <div class="wk"><span class="wk-num">W10</span><div class="wk-info"><div class="wk-name">Kingston vs. Portmore — Two Cities, One Floor</div><div class="wk-sub">Split venue sections · Friendly war</div></div><div class="wk-dot" style="background:#533483;"></div></div>
+      <div class="wk"><span class="wk-num">W11</span><div class="wk-info"><div class="wk-name">African Diaspora — Continent to Caribbean</div><div class="wk-sub">Ghana · Nigeria · Senegal · Afrobeats meets Dancehall</div></div><div class="wk-dot" style="background:#009051;"></div></div>
+      <div class="wk"><span class="wk-num">W12</span><div class="wk-info"><div class="wk-name">St. Patrick's Caribbean Remix</div><div class="wk-sub">Green · Gold · Chicago + Montserrat Irish heritage</div></div><div class="wk-dot" style="background:#3B6D11;"></div></div>
+      <div class="wk"><span class="wk-num">W13</span><div class="wk-info"><div class="wk-name">Dancehall Eras — 80s vs 90s vs 2000s</div><div class="wk-sub">3 sections · 3 eras · dress the decade</div></div><div class="wk-dot" style="background:#888780;"></div></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quarter-title">◈ Q2 · APR · JUN — CULTURE & SPORT ◈</div>
+    <div class="wk-grid">
+      <div class="wk"><span class="wk-num">W14</span><div class="wk-info"><div class="wk-name">HBCU Night — College Colors</div><div class="wk-sub">Howard · FAMU · Morehouse · Spelman · Chicago unis</div></div><div class="wk-dot" style="background:#6B3FA0;"></div></div>
+      <div class="wk"><span class="wk-num">W15</span><div class="wk-info"><div class="wk-name">UWI vs UTech — Caribbean University Clash</div><div class="wk-sub">Pelican pride · Blue & gold · Campus colors</div></div><div class="wk-dot" style="background:#185FA5;"></div></div>
+      <div class="wk"><span class="wk-num">W16</span><div class="wk-info"><div class="wk-name">Chicago vs Jamaica — City Takeover</div><div class="wk-sub">Chi-town red vs JA black & gold</div></div><div class="wk-dot" style="background:#CE1141;"></div></div>
+      <div class="wk"><span class="wk-num">W17</span><div class="wk-info"><div class="wk-name">NBA Colors — Wear Your Team</div><div class="wk-sub">Bulls · Lakers · Celtics · Bucks · Heat · Warriors</div></div><div class="wk-dot" style="background:#CE1141;"></div></div>
+      <div class="wk"><span class="wk-num">W18</span><div class="wk-info"><div class="wk-name">Track & Field Night — Jamaica Olympics Colors</div><div class="wk-sub">Gold for every medal · Sprint culture</div></div><div class="wk-dot" style="background:#FFD700;"></div></div>
+      <div class="wk"><span class="wk-num">W19</span><div class="wk-info"><div class="wk-name">Cricket Whites — West Indies Night</div><div class="wk-sub">All white + maroon accents · Windies pride</div></div><div class="wk-dot" style="background:#6B1A1A;"></div></div>
+      <div class="wk"><span class="wk-num">W20</span><div class="wk-info"><div class="wk-name">Mothers Day — Dress for Mom</div><div class="wk-sub">Her favorite color · Floral · Soft tones</div></div><div class="wk-dot" style="background:#ED93B1;"></div></div>
+      <div class="wk"><span class="wk-num">W21</span><div class="wk-info"><div class="wk-name">World Cup Colors — Represent Your Nation</div><div class="wk-sub">International DJs · Flags everywhere</div></div><div class="wk-dot" style="background:#1A6B3A;"></div></div>
+      <div class="wk"><span class="wk-num">W22</span><div class="wk-info"><div class="wk-name">Notting Hill Carnival Preview — London Vibes</div><div class="wk-sub">UK Caribbean energy before the real thing</div></div><div class="wk-dot" style="background:#FF6B9D;"></div></div>
+      <div class="wk current-week" id="currentWeekCard"><span class="wk-num">W23</span><div class="wk-info"><div class="wk-name">Juneteenth Celebration — Black Freedom Colors</div><div class="wk-sub">Red · Black · Green · Pan-African pride · Wednesday June 11</div></div><div class="wk-dot" style="background:#C8102E;"></div></div>
+      <div class="wk"><span class="wk-num">W24</span><div class="wk-info"><div class="wk-name">Reggae Sumfest Preview — Festival Colors</div><div class="wk-sub">Montego Bay energy · Stage-ready looks</div></div><div class="wk-dot" style="background:#EF9F27;"></div></div>
+      <div class="wk"><span class="wk-num">W25</span><div class="wk-info"><div class="wk-name">Fathers Day — Men in Color</div><div class="wk-sub">Suited & booted · Sharp Caribbean drip</div></div><div class="wk-dot" style="background:#185FA5;"></div></div>
+      <div class="wk"><span class="wk-num">W26</span><div class="wk-info"><div class="wk-name">Halfway — Best of 25 Weeks Recap Night</div><div class="wk-sub">Wear any theme from W01–W25 · All vibes welcome</div></div><div class="wk-dot" style="background:#7F77DD;"></div></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quarter-title">◈ Q3 · JUL · SEP — INDEPENDENCE & CARNIVAL ◈</div>
+    <div class="wk-grid">
+      <div class="wk"><span class="wk-num">W27</span><div class="wk-info"><div class="wk-name">Jamaica Independence — Red Gold & Green Black</div><div class="wk-sub">August 6 celebration · National pride peak</div></div><div class="wk-dot" style="background:#C8102E;"></div></div>
+      <div class="wk"><span class="wk-num">W28</span><div class="wk-info"><div class="wk-name">Trinidad Independence — Red Black & White</div><div class="wk-sub">August 31 · Soca takeover night</div></div><div class="wk-dot" style="background:#CC0001;"></div></div>
+      <div class="wk"><span class="wk-num">W29</span><div class="wk-info"><div class="wk-name">Barbados Independence — Blue Gold & Black</div><div class="wk-sub">Bajan pride · Trident up</div></div><div class="wk-dot" style="background:#00267F;"></div></div>
+      <div class="wk"><span class="wk-num">W30</span><div class="wk-info"><div class="wk-name">Guyana Independence — Green Gold & Black</div><div class="wk-sub">Golden Arrowhead colors</div></div><div class="wk-dot" style="background:#009E49;"></div></div>
+      <div class="wk"><span class="wk-num">W31</span><div class="wk-info"><div class="wk-name">Carnival Colors — Feathers Sequins & Powder</div><div class="wk-sub">Full mas · Glow sticks · Color countdown</div></div><div class="wk-dot" style="background:#FF6B9D;"></div></div>
+      <div class="wk"><span class="wk-num">W32</span><div class="wk-info"><div class="wk-name">Jouvert — Mud Oil & Paint Night</div><div class="wk-sub">All white in · all color out · Trini tradition</div></div><div class="wk-dot" style="background:#5F5E5A;"></div></div>
+      <div class="wk"><span class="wk-num">W33</span><div class="wk-info"><div class="wk-name">Soca Monarch Night — Energy Colors</div><div class="wk-sub">Neon · Electric · Road march vibes</div></div><div class="wk-dot" style="background:#EF9F27;"></div></div>
+      <div class="wk"><span class="wk-num">W34</span><div class="wk-info"><div class="wk-name">African Nations Night — 54 Countries</div><div class="wk-sub">Afrobeats showcase · Wear your flag</div></div><div class="wk-dot" style="background:#009051;"></div></div>
+      <div class="wk"><span class="wk-num">W35</span><div class="wk-info"><div class="wk-name">Ghana Night — Black Stars Edition</div><div class="wk-sub">Red · Gold · Green · Black star</div></div><div class="wk-dot" style="background:#006B3F;"></div></div>
+      <div class="wk"><span class="wk-num">W36</span><div class="wk-info"><div class="wk-name">Nigeria Night — Naija Colors</div><div class="wk-sub">Green & White · Super Eagles energy</div></div><div class="wk-dot" style="background:#008751;"></div></div>
+      <div class="wk"><span class="wk-num">W37</span><div class="wk-info"><div class="wk-name">Haiti Night — Blue & Red Bicolor</div><div class="wk-sub">Kompa · Culture · Haitian pride</div></div><div class="wk-dot" style="background:#00209F;"></div></div>
+      <div class="wk"><span class="wk-num">W38</span><div class="wk-info"><div class="wk-name">Caribbean Brunch Overflow — Pastel Edition</div><div class="wk-sub">Day party vibes · Soft pastels · Sunday feeling</div></div><div class="wk-dot" style="background:#9FE1CB;"></div></div>
+      <div class="wk"><span class="wk-num">W39</span><div class="wk-info"><div class="wk-name">Sound System Clash — Speaker Box Colors</div><div class="wk-sub">Represent your sound · Bass culture</div></div><div class="wk-dot" style="background:#2C2C2A;"></div></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quarter-title">◈ Q4 · OCT · DEC — NOSTALGIA, GLOW & ELEGANCE ◈</div>
+    <div class="wk-grid">
+      <div class="wk"><span class="wk-num">W40</span><div class="wk-info"><div class="wk-name">Glow Night — Neon & Blacklight</div><div class="wk-sub">UV paint station · LED dancers · Neon only</div></div><div class="wk-dot" style="background:#39FF14;"></div></div>
+      <div class="wk"><span class="wk-num">W41</span><div class="wk-info"><div class="wk-name">Halloween Caribbean Style — Costume Color</div><div class="wk-sub">Duppy · Rolling Calf · Obeah Woman costumes</div></div><div class="wk-dot" style="background:#854F0B;"></div></div>
+      <div class="wk"><span class="wk-num">W42</span><div class="wk-info"><div class="wk-name">Throwback 90s — Jerseys & Windbreakers</div><div class="wk-sub">Old-school Hip-Hop vs Dancehall · Vintage fits</div></div><div class="wk-dot" style="background:#FF8C00;"></div></div>
+      <div class="wk"><span class="wk-num">W43</span><div class="wk-info"><div class="wk-name">Throwback 80s — Bashment Era</div><div class="wk-sub">Early Dancehall · Bright colors · Dynasty fits</div></div><div class="wk-dot" style="background:#D85A30;"></div></div>
+      <div class="wk"><span class="wk-num">W44</span><div class="wk-info"><div class="wk-name">Lovers Rock Night — Slow Wine Edition</div><div class="wk-sub">Burgundy · Rose · Velvet textures</div></div><div class="wk-dot" style="background:#993556;"></div></div>
+      <div class="wk"><span class="wk-num">W45</span><div class="wk-info"><div class="wk-name">Denim & Timbs Night — Street Colors</div><div class="wk-sub">Blue · Brown · Classic street flex</div></div><div class="wk-dot" style="background:#185FA5;"></div></div>
+      <div class="wk"><span class="wk-num">W46</span><div class="wk-info"><div class="wk-name">Vybz Kartel Era — Gaza Colors</div><div class="wk-sub">Yellow · Black · Addi tribute night</div></div><div class="wk-dot" style="background:#FFD700;"></div></div>
+      <div class="wk"><span class="wk-num">W47</span><div class="wk-info"><div class="wk-name">Bob Marley Tribute — Legend Colors</div><div class="wk-sub">Red Gold Green · One Love energy</div></div><div class="wk-dot" style="background:#C8102E;"></div></div>
+      <div class="wk"><span class="wk-num">W48</span><div class="wk-info"><div class="wk-name">Thanksgiving Caribbean Style — Harvest Colors</div><div class="wk-sub">Orange · Brown · Gold · Ackee & saltfish drip</div></div><div class="wk-dot" style="background:#BA7517;"></div></div>
+      <div class="wk"><span class="wk-num">W49</span><div class="wk-info"><div class="wk-name">Black Friday — All Black Everything</div><div class="wk-sub">Monochrome black · Gold accents only</div></div><div class="wk-dot" style="background:#2C2C2A;"></div></div>
+      <div class="wk"><span class="wk-num">W50</span><div class="wk-info"><div class="wk-name">Christmas Inna di Dancehall — Red & Green</div><div class="wk-sub">Grand Market energy · Festive Caribbean style</div></div><div class="wk-dot" style="background:#C8102E;"></div></div>
+      <div class="wk"><span class="wk-num">W51</span><div class="wk-info"><div class="wk-name">Year in Review — Best Dressed Hall of Fame</div><div class="wk-sub">Rewear your best look from any 2025 week</div></div><div class="wk-dot" style="background:#C9A84C;"></div></div>
+      <div class="wk"><span class="wk-num">W52</span><div class="wk-info"><div class="wk-name">White Affair — New Year's Eve Grand Finale</div><div class="wk-sub">All white · Champagne · 2026 countdown</div></div><div class="wk-dot" style="background:#D3D1C7;"></div></div>
+    </div>
+  </div>
+</div>
+
+<section id="vip" style="background: var(--black-soft); padding: 3rem 2rem; text-align: center; border-top: 0.5px solid var(--border-gold); border-bottom: 0.5px solid var(--border-gold);">
+  <p class="section-label">Elevate the experience</p>
+  <h2 class="section-title" style="font-size: 2rem;">Join VIP — 52 nights of excellence</h2>
+  <a class="btn-primary" href="#" style="margin: 1rem auto; display: inline-block;">Secure VIP Access</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><p class="footer-brand-name">CHROMA</p><p class="footer-brand-sub">Wear Your Colors</p><p class="footer-brand-desc">Every Wednesday, Chicago transforms. 52 weeks of color, music, and Caribbean culture. Doors 9PM sharp.</p></div>
+    <div><p class="footer-col-title">Events</p><ul class="footer-links"><li><a href="#">52 Weeks Calendar</a></li><li><a href="#">Color Reveal</a></li><li><a href="#">Past Events</a></li></ul></div>
+    <div><p class="footer-col-title">Participate</p><ul class="footer-links"><li><a href="#">Get Tickets</a></li><li><a href="#">VIP Access</a></li><li><a href="#">Contests</a></li></ul></div>
+    <div><p class="footer-col-title">Company</p><ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Press Kit</a></li><li><a href="#">Legal</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2025 CHROMA Chicago — 52 Colors, 52 Nights. Every Wednesday 9PM–1:45AM.</p><div class="footer-socials"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a></div></div>
+</footer>
+
+<script>
+  (function() {
+    // current week manually set to June 7–13, 2025 (W23: Juneteenth Celebration)
+    const currentWeekElem = document.getElementById('currentWeekCard');
+    if (currentWeekElem) {
+      currentWeekElem.classList.add('current-week');
+      const themeNameElem = document.getElementById('currentWeekName');
+      const dateElem = document.getElementById('currentWeekDate');
+      if (themeNameElem) themeNameElem.innerText = "Juneteenth Celebration — Black Freedom Colors";
+      if (dateElem) dateElem.innerText = "June 7 – 13, 2025 · Wednesday June 11 · 9PM–1:45AM";
+    }
+    // scroll button
+    const scrollBtn = document.getElementById('scrollToCurrentBtn');
+    if (scrollBtn && currentWeekElem) {
+      scrollBtn.addEventListener('click', () => {
+        currentWeekElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  })();
+</script>
+</body>
+</html>
